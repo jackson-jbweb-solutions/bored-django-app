@@ -1,0 +1,55 @@
+<tr id="wheelchair-{{ wc.id }}">
+    <td>
+        <span class="inline-flex items-center gap-1 text-slate-400 text-xs">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5 text-slate-500">
+                <path d="M6.5 3a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" />
+                <path fill-rule="evenodd" d="M6.5 7.5a5 5 0 100 10 5 5 0 000-10zm-3.5 5a3.5 3.5 0 117 0 3.5 3.5 0 01-7 0z" clip-rule="evenodd" />
+                <path d="M9.447 7.105a.75.75 0 01.948.447l1.5 4a.75.75 0 01-.447.948.75.75 0 01-.948-.447L9 8.39V9.75a.75.75 0 01-1.5 0V7.75a.75.75 0 011.5 0v.013l.447-.658z" />
+            </svg>
+            Wheelchair
+        </span>
+    </td>
+    <td><code class="text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded text-xs font-mono">{{ wc.serial_number }}</code></td>
+    <td>
+        <span class="font-medium text-slate-100">{{ wc.make }}</span>
+        <span class="text-slate-400"> {{ wc.model }}</span>
+    </td>
+    <td class="text-slate-400 text-sm">{{ wc.ward.name|default:"—" }}</td>
+    <td>
+        {% with status=wc.status %}
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium
+            {% if status == 'available' %}bg-green-500/10 text-green-400
+            {% elif status == 'in_use' %}bg-blue-500/10 text-blue-400
+            {% elif status == 'under_repair' %}bg-amber-500/10 text-amber-400
+            {% else %}bg-slate-500/10 text-slate-400{% endif %}">
+            <span class="w-1.5 h-1.5 rounded-full
+                {% if status == 'available' %}bg-green-500
+                {% elif status == 'in_use' %}bg-blue-500
+                {% elif status == 'under_repair' %}bg-amber-500
+                {% else %}bg-slate-500{% endif %}">
+            </span>
+            {{ wc.get_status_display }}
+        </span>
+        {% endwith %}
+    </td>
+    <td class="text-slate-400 text-sm">{{ wc.paired_cushion|default:"—" }}</td>
+    <td>
+        <div class="flex items-center gap-1.5">
+            <button
+                hx-get="/assets/wheelchairs/{{ wc.id }}/edit/"
+                hx-target="#wheelchair-{{ wc.id }}"
+                hx-swap="outerHTML"
+                class="btn btn-edit">
+                Edit
+            </button>
+            <button
+                hx-delete="/assets/wheelchairs/{{ wc.id }}/delete/"
+                hx-target="#wheelchair-{{ wc.id }}"
+                hx-swap="outerHTML"
+                hx-confirm="Delete this wheelchair?"
+                class="btn btn-delete">
+                Delete
+            </button>
+        </div>
+    </td>
+</tr>

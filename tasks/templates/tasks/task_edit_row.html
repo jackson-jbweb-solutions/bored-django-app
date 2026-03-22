@@ -1,0 +1,38 @@
+<tr id="task-{{ task.id }}">
+    <td colspan="5">
+        <form
+            hx-post="/tasks/{{ task.id }}/edit/"
+            hx-target="#task-{{ task.id }}"
+            hx-swap="outerHTML"
+            class="task-form task-form--inline">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                {{ form.title }}
+            </div>
+
+            <div class="form-group">
+                {{ form.description }}
+            </div>
+
+            <div class="form-group form-inline">
+                {{ form.completed }}
+                <label>Completed</label>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Save</button>
+
+                <!-- Cancel: restore original row by fetching it from the server -->
+                <button
+                    type="button"
+                    hx-get="/tasks/{{ task.id }}/row/"
+                    hx-target="#task-{{ task.id }}"
+                    hx-swap="outerHTML"
+                    class="btn btn-ghost">Cancel</button>
+            </div>
+
+        </form>
+    </td>
+</tr>

@@ -1,0 +1,23 @@
+<tr id="ward-{{ ward.id }}">
+    <td colspan="3">
+        <form
+            hx-post="/assets/wards/{{ ward.id }}/edit/"
+            hx-target="#ward-{{ ward.id }}"
+            hx-swap="outerHTML"
+            class="task-form task-form--inline">
+            {% csrf_token %}
+            <div class="form-group">{{ form.name }}</div>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                <button
+                    type="button"
+                    hx-get="/assets/wards/{{ ward.id }}/row/"
+                    hx-target="#ward-{{ ward.id }}"
+                    hx-swap="outerHTML"
+                    class="btn btn-ghost btn-sm">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </td>
+</tr>

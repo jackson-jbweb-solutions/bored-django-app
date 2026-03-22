@@ -1,0 +1,17 @@
+<form
+    hx-post="/assets/wards/create/"
+    hx-target="#ward-list"
+    hx-swap="afterbegin"
+    class="task-form">
+    {% csrf_token %}
+    <div class="form-group">{{ form.name }}</div>
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary btn-sm">Save Ward</button>
+        <button
+            type="button"
+            onclick="this.closest('form').remove()"
+            class="btn btn-ghost btn-sm">
+            Cancel
+        </button>
+    </div>
+</form>

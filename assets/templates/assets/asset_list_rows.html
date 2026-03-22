@@ -1,0 +1,11 @@
+{% for item in assets %}
+    {% if item.asset_type == "wheelchair" %}
+        {% include "assets/wheelchair_row.html" with wc=item %}
+    {% else %}
+        {% include "assets/cushion_row.html" with cushion=item %}
+    {% endif %}
+{% empty %}
+    <tr>
+        <td colspan="7" class="text-center text-slate-500! py-10">No assets found.</td>
+    </tr>
+{% endfor %}

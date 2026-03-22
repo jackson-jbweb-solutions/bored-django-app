@@ -1,0 +1,21 @@
+<tr id="ward-{{ ward.id }}">
+    <td><strong>{{ ward.name }}</strong></td>
+    <td>{{ ward.created_at|date:"M d, Y" }}</td>
+    <td>
+        <button
+            hx-get="/assets/wards/{{ ward.id }}/edit/"
+            hx-target="#ward-{{ ward.id }}"
+            hx-swap="outerHTML"
+            class="btn btn-sm btn-edit">
+            Edit
+        </button>
+        <button
+            hx-delete="/assets/wards/{{ ward.id }}/delete/"
+            hx-target="#ward-{{ ward.id }}"
+            hx-swap="outerHTML"
+            hx-confirm="Delete ward '{{ ward.name }}'?"
+            class="btn btn-sm btn-delete">
+            Delete
+        </button>
+    </td>
+</tr>

@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+/* Global dark styling for Django-rendered form inputs */
+@layer base {
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    input[type="number"],
+    input[type="search"],
+    select,
+    textarea {
+        @apply w-full bg-slate-800 border border-slate-700 text-slate-200 rounded-md px-3 py-2 text-sm;
+        @apply focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500;
+        @apply placeholder:text-slate-500;
+    }
+
+    input[type="checkbox"] {
+        @apply accent-indigo-500 w-4 h-4;
+    }
+}
+
+/* Tailwind component classes — replaces custom CSS from base.html <style> block */
+@layer components {
+    /* Buttons */
+    .btn {
+        @apply inline-flex items-center gap-1.5 font-medium rounded-md transition-colors cursor-pointer;
+    }
+    .btn-primary {
+        @apply bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 text-sm;
+    }
+    .btn-ghost {
+        @apply bg-transparent text-slate-400 border border-slate-700 hover:bg-slate-800 px-4 py-2 text-sm;
+    }
+    .btn-edit {
+        @apply bg-slate-700 hover:bg-slate-600 text-slate-200 px-3 py-1.5 text-xs rounded-md;
+    }
+    .btn-delete {
+        @apply bg-red-900/40 hover:bg-red-700 text-red-400 hover:text-white px-3 py-1.5 text-xs rounded-md;
+    }
+    .btn-sm {
+        @apply px-3 py-1.5 text-xs;
+    }
+
+    /* Table */
+    .task-table {
+        @apply w-full border-collapse;
+    }
+    .task-table th {
+        @apply bg-slate-800 text-slate-400 text-xs uppercase tracking-wider px-4 py-3 text-left;
+    }
+    .task-table td {
+        @apply px-4 py-3 border-b border-slate-700/50 text-slate-200 align-top;
+    }
+    .task-table tr:last-child td {
+        @apply border-b-0;
+    }
+    .task-table tbody tr:hover td {
+        @apply bg-slate-800/50;
+    }
+
+    /* Form panels */
+    .task-form {
+        @apply bg-slate-800 border border-slate-700 rounded-lg p-4 mb-4 flex flex-wrap gap-3 items-start;
+    }
+    .task-form--inline {
+        @apply mb-0;
+    }
+    .form-group {
+        @apply flex-1 basis-48;
+    }
+    .form-actions {
+        @apply shrink-0 flex gap-2 items-center mt-1;
+    }
+    .form-inline {
+        @apply flex items-center gap-2;
+    }
+    /* HTMX loading */
+    .htmx-indicator {
+        @apply opacity-0 transition-opacity;
+    }
+    .htmx-request .htmx-indicator {
+        @apply opacity-100;
+    }
+}

@@ -1,0 +1,40 @@
+<tr id="task-{{ task.id }}">
+    <td>
+        {% if task.completed %}
+        <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-green-500/20 text-green-400">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-3.5 h-3.5">
+                <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
+            </svg>
+        </span>
+        {% else %}
+        <span class="inline-flex items-center justify-center w-5 h-5 rounded-full border border-slate-600"></span>
+        {% endif %}
+    </td>
+    <td>
+        <span class="font-medium text-slate-100 {% if task.completed %}line-through text-slate-500{% endif %}">{{ task.title }}</span>
+        {% if task.description %}
+        <p class="text-xs text-slate-500 mt-0.5">{{ task.description }}</p>
+        {% endif %}
+    </td>
+    <td class="text-slate-400 text-sm whitespace-nowrap">{{ task.created_at|date:"M d, Y" }}</td>
+    <td class="text-slate-400 text-sm">{{ task.user.first_name|default:task.user.username }}</td>
+    <td>
+        <div class="flex items-center gap-1.5">
+            <button
+                hx-get="/tasks/{{ task.id }}/edit/"
+                hx-target="#task-{{ task.id }}"
+                hx-swap="outerHTML"
+                class="btn btn-edit">
+                Edit
+            </button>
+            <button
+                hx-delete="/tasks/{{ task.id }}/delete/"
+                hx-target="#task-{{ task.id }}"
+                hx-swap="outerHTML"
+                hx-confirm="Delete this task?"
+                class="btn btn-delete">
+                Delete
+            </button>
+        </div>
+    </td>
+</tr>

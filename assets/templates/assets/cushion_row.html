@@ -1,0 +1,48 @@
+<tr id="cushion-{{ cushion.id }}">
+    <td>
+        <span class="text-slate-400 text-xs">Cushion</span>
+    </td>
+    <td><code class="text-slate-300 bg-slate-800 px-1.5 py-0.5 rounded text-xs font-mono">{{ cushion.serial_number }}</code></td>
+    <td>
+        <span class="font-medium text-slate-100">{{ cushion.make }}</span>
+        <span class="text-slate-400"> {{ cushion.model }}</span>
+    </td>
+    <td class="text-slate-400 text-sm">{{ cushion.ward.name|default:"—" }}</td>
+    <td>
+        {% with status=cushion.status %}
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium
+            {% if status == 'available' %}bg-green-500/10 text-green-400
+            {% elif status == 'in_use' %}bg-blue-500/10 text-blue-400
+            {% elif status == 'under_repair' %}bg-amber-500/10 text-amber-400
+            {% else %}bg-slate-500/10 text-slate-400{% endif %}">
+            <span class="w-1.5 h-1.5 rounded-full
+                {% if status == 'available' %}bg-green-500
+                {% elif status == 'in_use' %}bg-blue-500
+                {% elif status == 'under_repair' %}bg-amber-500
+                {% else %}bg-slate-500{% endif %}">
+            </span>
+            {{ cushion.get_status_display }}
+        </span>
+        {% endwith %}
+    </td>
+    <td class="text-slate-400 text-sm">{% if cushion.wheelchair %}Paired{% else %}—{% endif %}</td>
+    <td>
+        <div class="flex items-center gap-1.5">
+            <button
+                hx-get="/assets/cushions/{{ cushion.id }}/edit/"
+                hx-target="#cushion-{{ cushion.id }}"
+                hx-swap="outerHTML"
+                class="btn btn-edit">
+                Edit
+            </button>
+            <button
+                hx-delete="/assets/cushions/{{ cushion.id }}/delete/"
+                hx-target="#cushion-{{ cushion.id }}"
+                hx-swap="outerHTML"
+                hx-confirm="Delete this cushion?"
+                class="btn btn-delete">
+                Delete
+            </button>
+        </div>
+    </td>
+</tr>

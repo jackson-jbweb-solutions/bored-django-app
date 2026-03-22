@@ -1,0 +1,43 @@
+<form
+    hx-post="/assets/{% if type == 'cushion' %}cushions{% else %}wheelchairs{% endif %}/create/"
+    hx-target="#asset-list"
+    hx-swap="afterbegin"
+    class="task-form mb-4">
+    {% csrf_token %}
+
+    <div class="form-group basis-full">
+        <label class="block text-sm font-medium text-slate-300 mb-1.5">Asset type</label>
+        <select
+            name="type"
+            hx-get="/assets/create-form/"
+            hx-target="#asset-form-container"
+            hx-swap="innerHTML"
+            hx-trigger="change">
+            <option value="wheelchair" {% if type == "wheelchair" %}selected{% endif %}>Wheelchair</option>
+            <option value="cushion" {% if type == "cushion" %}selected{% endif %}>Cushion</option>
+        </select>
+    </div>
+
+    <div class="form-group">{{ form.serial_number }}</div>
+    <div class="form-group">{{ form.make }}</div>
+    <div class="form-group">{{ form.model }}</div>
+    <div class="form-group">{{ form.purchase_date }}</div>
+    <div class="form-group">{{ form.status }}</div>
+    <div class="form-group">{{ form.ward }}</div>
+    {% if type == "wheelchair" %}
+        <div class="form-group">{{ form.paired_cushion }}</div>
+    {% endif %}
+    <div class="form-group basis-full">{{ form.notes }}</div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">
+            Add {% if type == "cushion" %}Cushion{% else %}Wheelchair{% endif %}
+        </button>
+        <button
+            type="button"
+            onclick="this.closest('form').remove()"
+            class="btn btn-ghost">
+            Cancel
+        </button>
+    </div>
+</form>

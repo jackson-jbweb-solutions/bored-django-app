@@ -1,0 +1,45 @@
+{% extends "tasks/base.html" %}
+{% block content %}
+<div class="min-h-[80vh] flex items-center justify-center">
+    <div class="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-xl shadow-xl p-8">
+        <h2 class="text-xl font-semibold text-white mb-1">Create Account</h2>
+        <p class="text-sm text-slate-400 mb-6">
+            Already have an account?
+            <a href="{% url 'login' %}" class="text-indigo-400 hover:text-indigo-300">Sign in</a>
+        </p>
+
+        <form method="POST" action="{% url 'register' %}">
+            {% csrf_token %}
+            {% if form.errors %}
+            <div class="bg-red-900/30 border border-red-700 text-red-400 rounded-md px-4 py-3 text-sm mb-4">
+                {% for field in form %}{% for error in field.errors %}<p>{{ error }}</p>{% endfor %}{% endfor %}
+                {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="space-y-4">
+                <div>
+                    <label for="{{ form.username.id_for_label }}" class="block text-sm font-medium text-slate-300 mb-1.5">Username</label>
+                    {{ form.username }}
+                </div>
+                <div>
+                    <label for="{{ form.email.id_for_label }}" class="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+                    {{ form.email }}
+                </div>
+                <div>
+                    <label for="{{ form.password1.id_for_label }}" class="block text-sm font-medium text-slate-300 mb-1.5">Password</label>
+                    {{ form.password1 }}
+                </div>
+                <div>
+                    <label for="{{ form.password2.id_for_label }}" class="block text-sm font-medium text-slate-300 mb-1.5">Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full justify-center mt-6">
+                Create Account
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

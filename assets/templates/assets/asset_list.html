@@ -1,0 +1,63 @@
+{% extends "assets/base.html" %}
+{% block content %}
+
+<div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-semibold text-white">Assets</h1>
+    <button
+        hx-get="/assets/create-form/?type=wheelchair"
+        hx-target="#asset-form-container"
+        hx-swap="innerHTML"
+        class="btn btn-primary">
+        + Add Asset
+    </button>
+</div>
+
+<!-- Filter bar -->
+<form
+    hx-get="/assets/rows/"
+    hx-target="#asset-list"
+    hx-swap="innerHTML"
+    hx-trigger="change"
+    class="flex flex-wrap gap-3 mb-4 items-center">
+    <select name="type" class="flex-1 min-w-[120px]">
+        <option value="">All types</option>
+        <option value="wheelchair">Wheelchair</option>
+        <option value="cushion">Cushion</option>
+    </select>
+    <select name="ward" class="flex-1 min-w-[150px]">
+        <option value="">All wards</option>
+        {% for ward in wards %}
+            <option value="{{ ward.id }}">{{ ward.name }}</option>
+        {% endfor %}
+    </select>
+    <select name="status" class="flex-1 min-w-[150px]">
+        <option value="">All statuses</option>
+        {% for value, label in status_choices %}
+            <option value="{{ value }}">{{ label }}</option>
+        {% endfor %}
+    </select>
+</form>
+
+<div id="asset-form-container"></div>
+
+<!-- Asset table -->
+<div class="bg-slate-900 border border-slate-800 rounded-lg overflow-hidden overflow-x-auto">
+    <table class="task-table min-w-[750px]">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Serial</th>
+                <th>Make / Model</th>
+                <th>Ward</th>
+                <th>Status</th>
+                <th>Paired Cushion</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="asset-list">
+            {% include "assets/asset_list_rows.html" %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
